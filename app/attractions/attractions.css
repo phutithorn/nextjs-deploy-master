@@ -1,5 +1,53 @@
-* {
-    margin: 0;
-    padding: 0;
-  }
-  
+/* ตั้งค่าพื้นฐานของหน้าเว็บ */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
+/* จัดศูนย์กลางคอนเทนต์ */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* สไตล์หัวข้อ */
+h1, h5 {
+  text-align: center;
+  color: #333;
+}
+
+/* ปรับแต่งการ์ด */
+.MuiCard-root {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.MuiCard-root:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ปรับขนาดรูปภาพให้เต็มการ์ด */
+.MuiCardMedia-root {
+  height: 180px !important;
+  object-fit: cover;
+}
+
+/* ปรับแต่งปุ่ม */
+.MuiButton-root {
+  color: #fff !important;
+  background-color: #007bff !important;
+  text-transform: none;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 5px 15px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.MuiButton-root:hover {
+  background-color: #0056b3 !important;
+}
