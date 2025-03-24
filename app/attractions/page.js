@@ -1,35 +1,49 @@
-import React from 'react'
+"use client"; 
+
+import React, { useEffect, useState } from 'react';
 import { 
   Card, CardActions, CardContent, CardMedia, Button, Typography, Grid 
-} from '@mui/material'
+} from '@mui/material';
 
 export async function getData() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/attractions`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/attractions`);
   if (!res.ok) {
-    throw new Error('Failed to fetch data')
+    throw new Error('Failed to fetch data');
   }
-  return res.json()
+  return res.json();
 }
 
-export default async function page() {
-  if (!process.env.NEXT_PUBLIC_API_URL) {
-    return null
-  }
-  const data = await getData()
+export default function Page() {
+  const [data, setData] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getData();
+        setData(result);
+        setLoaded(true); // เริ่มแอนิเมชันเมื่อโหลดเสร็จ
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
-    <div>
+    <div className="container">
       <Typography variant='h5'>Attractions</Typography>
-      <Grid container spacing={1}>
-        {data.map(attraction => (
+      <Grid container spacing={2}>
+        {data.map((attraction, index) => (
           <Grid item key={attraction.id} xs={12} md={4}>
-            <Card>
+            <Card className={loaded ? "card-animate MuiCard-root" : "MuiCard-root"}>
               <CardMedia
                 sx={{ height: 140 }}
                 image={attraction.coverimage}
                 title={attraction.name}
               />
               <CardContent>
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography gutterBottom variant="h6">
                   {attraction.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" noWrap>
@@ -46,6 +60,5 @@ export default async function page() {
         ))}
       </Grid>
     </div>
-  )
+  );
 }
-
