@@ -42,4 +42,20 @@ export async function PUT(request){
     }
 }
 
+export async function DELETE(request){
+    try {
+        const {id} = await request.json();
+        const [result] = await db.query(
+            'DELETE FROM attractions WHERE id = ?',[id]
+        );
+        if (result.affectedRows == 0){
+            return NextResponse.json({error: "ID Not found"}, {status: 404});
+        }
+
+        return NextResponse.json({message: "Deleted", id}, {status: 200});
+    } catch (error){
+        return NextResponse.json({error: error}, {status: 500})
+    }
+}
+
 
